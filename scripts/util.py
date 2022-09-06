@@ -23,6 +23,6 @@ class Util:
         try:
             data_url = dvc.get_url(path=path,repo=repo,rev=rev)
             df =pd.read_csv(data_url)
-        except Exception:
-            print("Something went wrong!",Exception)
+        except Exception as e:
+            print("Something went wrong!",e)
         return df
