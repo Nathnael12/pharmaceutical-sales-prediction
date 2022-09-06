@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import dvc.api as dvc
 
+import io 
+import sys
+sys.path.append('../')
+
 class Util:
     
     def read_from_file(self,path):
@@ -21,8 +25,8 @@ class Util:
             Load data from a dvc storage
         """
         try:
-            data_url = dvc.get_url(path=path,repo=repo,rev=rev)
-            df =pd.read_csv(data_url)
+            data = dvc.read(path=path,repo=repo, rev=rev)
+            df = pd.read_csv(io.StringIO(data))
             return df
         except Exception as e:
             print("Something went wrong!",e)
