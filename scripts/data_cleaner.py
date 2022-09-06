@@ -67,38 +67,40 @@ class DataCleaner:
                 col_len = len(df[col])
                 missing_count = df[col].isnull().sum()
                 # print(f"{col} has {round(missing_count / col_len * 100, 2)}% of its data missing")
-                rows.append([col,col_len,missing_count,round(missing_count / col_len * 100, 2)])
+                rows.append([col,col_len,missing_count,round(missing_count / col_len * 100, 2),df[col].dtype])
             except KeyError:
-                rows.append([col,"Not found","Not found","Not found"])
-        return pd.DataFrame(data=rows,columns=["Col Name","Total","Missing","%"]).sort_values(by="%",ascending=False)
+                rows.append([col,"Not found","Not found","Not found","Not found"])
+        return pd.DataFrame(data=rows,columns=["Col Name","Total","Missing","%","Data Type"]).sort_values(by="%",ascending=False)
 
             
 
     
-    def fill_missing_values_categorical(self, df: pd.DataFrame, method: str) -> pd.DataFrame:
+    def fill_missing_values_categorical(self, df: pd.DataFrame, method: str,columns:list=[]) -> pd.DataFrame:
         """
         fill missing values with specified method
         """
 
-        categorical_columns = df.select_dtypes(include=['object','datetime64[ns]']).columns
+        if len(columns)==0:
+            columns = df.select_dtypes(include=['object','datetime64[ns]']).columns
+
 
         if method == "ffill":
 
-            for col in categorical_columns:
+            for col in columns:
                 df[col] = df[col].fillna(method='ffill')
 
             return df
 
         elif method == "bfill":
 
-            for col in categorical_columns:
+            for col in columns:
                 df[col] = df[col].fillna(method='bfill')
 
             return df
 
         elif method == "mode":
             
-            for col in categorical_columns:
+            for col in columns:
                 df[col] = df[col].fillna(df[col].mode()[0])
 
             return df
@@ -181,3 +183,22 @@ class DataCleaner:
             df[col] = np.where(df[col] > upper_bound, upper_bound, df[col])
         
         return df
+
+    def fill_mode(self, df, columns):
+        """Fill missing data with mode."""
+        for col in columns:
+            try:
+                df[col] = df[col].fillna(df[col].mode()[0])
+            except Exception:
+                print(f'Failed to Fill {col} Data')
+        return df
+    
+    def fill_zeros(self, df, columns):
+        """Fill missing data with zeros."""
+        for col in columns:
+            try:
+                df[col] = df[col].fillna(0)
+            except Exception:
+                print(f'Failed to Fill {col} Data')
+        return df
+        
