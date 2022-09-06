@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import dvc.api as dvc
 
-class Utiil:
+class Util:
     
     def read_from_file(self,path):
         """
