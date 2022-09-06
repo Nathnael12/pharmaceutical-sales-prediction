@@ -16,12 +16,13 @@ class Util:
             print("File not found.")
         return df
     def read_from_dvc(self,path,repo,rev):
+        
         """
             Load data from a dvc storage
         """
         try:
             data_url = dvc.get_url(path=path,repo=repo,rev=rev)
             df =pd.read_csv(data_url)
-        except:
-            print("Something went wrong!")
+        except Exception:
+            print("Something went wrong!",Exception)
         return df
