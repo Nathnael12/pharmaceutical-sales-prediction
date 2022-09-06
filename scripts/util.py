@@ -12,9 +12,9 @@ class Util:
         """
         try:
             df = pd.read_csv(path)
+            return df
         except FileNotFoundError:
             print("File not found.")
-        return df
     def read_from_dvc(self,path,repo,rev):
         
         """
@@ -23,6 +23,6 @@ class Util:
         try:
             data_url = dvc.get_url(path=path,repo=repo,rev=rev)
             df =pd.read_csv(data_url)
+            return df
         except Exception as e:
             print("Something went wrong!",e)
-        return df
