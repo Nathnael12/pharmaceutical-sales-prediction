@@ -23,6 +23,6 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Write to file
         run: |
-            cat metrics.txt >> report.md
-            cml publish"🎉 The job was automatically triggered by a ${{ github.event_name }} event. --md >> report.md
-            cml send-comment report.md
+          cat metrics.txt >> report.md
+          cml publish"🎉 The job was automatically triggered by a ${{ github.event_name }} event. --md >> report.md
+          cml send-comment report.md
