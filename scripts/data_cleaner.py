@@ -1,13 +1,28 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import Normalizer, MinMaxScaler, StandardScaler
+from logger import Logger
+import sys
 
 class DataCleaner:
+    def __init__(self) -> None:
+        """Initilize class."""
+        try:
+            pass
+            self.logger = Logger("data_cleaner.log").get_app_logger()
+            self.logger.info(
+                'Successfully initialized data cleaner Object')
+        except Exception:
+            self.logger.exception(
+                'Failed to Instantiate data cleaner Object')
+            sys.exit(1)
+
     def drop_duplicate(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         drop duplicate rows
         """
         df.drop_duplicates(inplace=True)
+        self.logger.info(f'dropped duplicate values')
 
         return df
     def convert_to_datetime(self, df: pd.DataFrame,columns :list) -> pd.DataFrame:
@@ -16,6 +31,7 @@ class DataCleaner:
         """
 
         df[columns] = df[columns].apply(pd.to_datetime)
+        self.logger.info(f'converted {columns} to date time')
 
         return df
 
@@ -24,6 +40,7 @@ class DataCleaner:
         convert columns to string
         """
         df[columns] = df[columns].astype(str)
+        self.logger.info(f'converted {columns} to string')
 
         return df
 
@@ -32,6 +49,7 @@ class DataCleaner:
         remove whitespace from columns
         """
         df.columns = [column.replace(' ', '_').lower() for column in df.columns]
+        self.logger.info(f'removed white spaces from column name')
 
         return df
 
@@ -42,6 +60,7 @@ class DataCleaner:
         totalCells = np.product(df.shape)
         missingCount = df.isnull().sum()
         totalMising = missingCount.sum()
+        self.logger.info(f'calculated missing value percentage')
 
         return round(totalMising / totalCells * 100, 2)
 
@@ -89,12 +108,16 @@ class DataCleaner:
             for col in columns:
                 df[col] = df[col].fillna(method='ffill')
 
+            self.logger.info(f'fill missing values using ffill')
+
             return df
 
         elif method == "bfill":
 
             for col in columns:
                 df[col] = df[col].fillna(method='bfill')
+            
+            self.logger.info(f'fill missing values using bfill')
 
             return df
 
@@ -102,10 +125,13 @@ class DataCleaner:
             
             for col in columns:
                 df[col] = df[col].fillna(df[col].mode()[0])
+            self.logger.info(f'fill missing values using mode')
 
             return df
         else:
             print("Method unknown")
+            self.logger.error(f'failed to fill missing values; method unkown')
+
             return df
 
     def fill_missing_values_numeric(self, df: pd.DataFrame, method: str,columns: list =None) -> pd.DataFrame:
@@ -120,12 +146,17 @@ class DataCleaner:
         if method == "mean":
             for col in numeric_columns:
                 df[col].fillna(df[col].mean(), inplace=True)
+            self.logger.info(f'fill missing values by mean')
+
 
         elif method == "median":
             for col in numeric_columns:
                 df[col].fillna(df[col].median(), inplace=True)
+            self.logger.info(f'fill missing values by median')
+
         else:
             print("Method unknown")
+            self.logger.error(f'failed to fill missing values; method unkown')
         
         return df
 
@@ -137,6 +168,7 @@ class DataCleaner:
         categorical_columns = self.get_categorical_columns(df)
         for col in categorical_columns:
             df = df[df[col] != 'nan']
+        self.logger.error(f'remove nan categorical values')
 
         return df
 
