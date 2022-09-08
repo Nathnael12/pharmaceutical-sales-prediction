@@ -81,10 +81,10 @@ class Model:
 
             tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
-            if tracking_url_type_store != "file":
-                mlflow.sklearn.log_model(fitted_model, "model", registered_model_name="RandomForestModel")
-            else:
-                mlflow.sklearn.log_model(fitted_model, "model") 
+            # if tracking_url_type_store != "file":
+            #     mlflow.sklearn.log_model(fitted_model, "model", registered_model_name="RandomForestModel")
+            # else:
+            #     mlflow.sklearn.log_model(fitted_model, "model") 
             
         return fitted_model, result_agg
 
