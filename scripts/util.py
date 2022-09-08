@@ -57,8 +57,8 @@ class Util:
         X,Y = input_data
         train_size,test_size=size
 
-        train_x=X.iloc[:round(train_size * X.shape[1])]
-        test_x=X.iloc[-round(test_size * X.shape[1]):]
+        train_x=X.iloc[:round(train_size * X.shape[0])]
+        test_x=X.iloc[-round(test_size * X.shape[0]):]
         
         train_y=Y.iloc[:round(train_size * len(Y))]
         test_y=Y.iloc[-round(test_size * len(Y)):]
