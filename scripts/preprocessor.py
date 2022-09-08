@@ -21,9 +21,9 @@ class Preprocessor:
         
         pipeline= Pipeline(steps=[
             ('format_dtype',FunctionTransformer(self.format_dtype,validate=False)),
-            ('standard_scaller',FunctionTransformer(self.cleaner.standard_scaler,validate=False)),
             ('feature_encodder',FunctionTransformer(self.cleaner.feature_encodder,validate=False)),
             ('feature_engineering',FunctionTransformer(self.feature_engineering,validate=False)),
+            ('standard_scaller',FunctionTransformer(self.cleaner.standard_scaler,validate=False)),
         ])
 
         return pipeline.fit_transform(df)
@@ -37,9 +37,11 @@ class Preprocessor:
         df['Year'] = pd.DatetimeIndex(df['Date']).year
         df['Day'] = pd.DatetimeIndex(df['Date']).day
 
-        df["TimeOfMonth"]=df["Day"].map(self.get_time_of_month)
-        df = self.cleaner.convert_to_string(df,["Month","Year","Day"])
 
+        df["TimeOfMonth"]=df["Day"].map(self.get_time_of_month)
+        df=self.cleaner.convert_to_int(df,['Month','Day','Year'])
+
+        df=df.drop("Date",axis=1)
 
 
         return df
@@ -58,7 +60,7 @@ class Preprocessor:
     def format_dtype(self,df):
         try:
             
-            df = self.cleaner.convert_to_datetime(df,['Date'])
+            df = self.cleaner.convert_to_string(df,['Date'])
 
             df = self.cleaner.convert_to_int(df,['Store','CompetitionOpenSinceMonth','CompetitionOpenSinceYear','Promo2SinceWeek','Promo2SinceYear','DayOfWeek','Customers','Open','Promo','SchoolHoliday','Promo2'])
 
