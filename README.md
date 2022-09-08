@@ -29,15 +29,15 @@ The data directory contains the dvc files which are the blueprints of the origin
 
 we have versioned our data according to the following tags
 
-- 'sample-v0' - the original sample_submission dataset
-- 'store-v0' - the original store dataset
-- 'store-v1' - the cleaned store dataset
-- 'test-v0' - the original test dataset
-- 'test-v1' - the cleaned test dataset
-- 'test-v2' - optimized cleaned test dataset
-- 'train-v0' - the original train dataset
-- 'train-v1' - the cleaned train dataset
-- 'train-v2' - optimized cleaned train dataset
+>- 'sample-v0' - the original sample_submission dataset
+>- 'store-v0' - the original store dataset
+>- 'store-v1' - the cleaned store dataset
+>- 'test-v0' - the original test dataset
+>- 'test-v1' - the cleaned test dataset
+>- 'test-v2' - optimized cleaned test dataset
+>- 'train-v0' - the original train dataset
+>- 'train-v1' - the cleaned train dataset
+>- 'train-v2' - optimized cleaned train dataset
 ___
 
 **Data and Features**
