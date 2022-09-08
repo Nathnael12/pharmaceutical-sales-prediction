@@ -225,7 +225,9 @@ class DataCleaner:
         scale numerical columns
         """
         standard_scaler = StandardScaler()
-        columns=["CompetitionDistance","Sales","Customers"]
+        columns=self.get_numerical_columns(df)
+        columns.remove("Store")
+        # columns=["CompetitionDistance","Sales","Customers"]
 
         
         df[columns]=standard_scaler.fit_transform(df[columns])
