@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.preprocessing import Normalizer, MinMaxScaler, StandardScaler
 from logger import Logger
 import sys
+from sklearn.preprocessing import LabelEncoder
 
 class DataCleaner:
     def __init__(self) -> None:
@@ -41,6 +42,33 @@ class DataCleaner:
         """
         df[columns] = df[columns].astype(str)
         self.logger.info(f'converted {columns} to string')
+
+        return df
+    
+    def convert_to_int(self, df: pd.DataFrame, columns :list) -> pd.DataFrame:
+        """
+        convert columns to string
+        """
+        df[columns] = df[columns].astype(int)
+        self.logger.info(f'converted {columns} to int')
+
+        return df
+    
+    def convert_to_object(self, df: pd.DataFrame, columns :list) -> pd.DataFrame:
+        """
+        convert columns to string
+        """
+        df[columns] = df[columns].astype(object)
+        self.logger.info(f'converted {columns} to object')
+
+        return df
+    
+    def convert_to_float(self, df: pd.DataFrame, columns :list) -> pd.DataFrame:
+        """
+        convert columns to string
+        """
+        df[columns] = df[columns].astype(float)
+        self.logger.info(f'converted {columns} to float')
 
         return df
 
@@ -233,4 +261,14 @@ class DataCleaner:
             except Exception:
                 print(f'Failed to Fill {col} Data')
         return df
-        
+    
+    def feature_encodder(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Encode features using LabelEncoder.
+        """
+        features = self.get_categorical_columns(df)
+        for feature in features:
+            encodder = LabelEncoder()
+            encodder.fit(df[feature])
+            df[feature] = encodder.transform(df[feature])
+        return df
