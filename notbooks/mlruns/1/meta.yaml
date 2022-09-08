@@ -1,0 +1,4 @@
+artifact_location: file:///C:/Users/natnael.masresha/Documents/Projects/Python/pharmaceutical-sales-prediction/notbooks/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: random_forest_regressor

@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/1/3980f066357946ed8a5b1ebbbd90cbba/artifacts
+end_time: 1662648837402
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+name: ''
+run_id: 3980f066357946ed8a5b1ebbbd90cbba
+run_uuid: 3980f066357946ed8a5b1ebbbd90cbba
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1662648831772
+status: 4
+tags: []
+user_id: natnael.masresha
