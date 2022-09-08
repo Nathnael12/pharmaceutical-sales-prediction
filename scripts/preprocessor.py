@@ -21,9 +21,9 @@ class Preprocessor:
         
         pipeline= Pipeline(steps=[
             ('format_dtype',FunctionTransformer(self.format_dtype,validate=False)),
+            ('standard_scaller',FunctionTransformer(self.cleaner.standard_scaler,validate=False)),
             ('feature_encodder',FunctionTransformer(self.cleaner.feature_encodder,validate=False)),
             ('feature_engineering',FunctionTransformer(self.feature_engineering,validate=False)),
-            ('standard_scaller',FunctionTransformer(self.cleaner.standard_scaler,validate=False)),
         ])
 
         return pipeline.fit_transform(df)
@@ -32,15 +32,34 @@ class Preprocessor:
         
         df["Weekday"]=np.where(df["DayOfWeek"]<6, 1, 0)
         df["Weekend"]=np.where(df["DayOfWeek"]>5, 1, 0)
+        
+        df['Month'] = pd.DatetimeIndex(df['Date']).month
+        df['Year'] = pd.DatetimeIndex(df['Date']).year
+        df['Day'] = pd.DatetimeIndex(df['Date']).day
+
+        df["TimeOfMonth"]=df["Day"].map(self.get_time_of_month)
+        df = self.cleaner.convert_to_string(df,["Month","Year","Day"])
+
+
 
         return df
+    
+    def get_time_of_month(self,day):
+        if day>0 and day < 11:
+            return 0
+        elif day >10 and day <21:
+            return 1
+        else:
+            return 2
+
+
     
     def format_dtype(self,df):
         try:
             
             df = self.cleaner.convert_to_datetime(df,['Date'])
 
-            df = self.cleaner.convert_to_int(df,['CompetitionOpenSinceMonth','CompetitionOpenSinceYear','Promo2SinceWeek','Promo2SinceYear','Store','DayOfWeek','Customers','Open','Promo','SchoolHoliday','Promo2'])
+            df = self.cleaner.convert_to_int(df,['Store','CompetitionOpenSinceMonth','CompetitionOpenSinceYear','Promo2SinceWeek','Promo2SinceYear','DayOfWeek','Customers','Open','Promo','SchoolHoliday','Promo2'])
 
             df = self.cleaner.convert_to_float(df,['CompetitionDistance'])
 
