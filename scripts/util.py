@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import dvc.api as dvc
 from logger import Logger
+from sklearn.model_selection import train_test_split
 import io 
 import sys
 sys.path.append('../')
@@ -47,3 +48,21 @@ class Util:
             self.logger.error(f"failed to read {path}; {e}")
 
             print("Something went wrong!",e)
+
+    def train_test_split(self, input_data:tuple, size:tuple)-> list:
+        """
+        Split the data into train, test and validation.
+        """
+        
+        X,Y = input_data
+        train_size,test_size=size
+
+        train_x=X.iloc[:round(train_size * X.shape[1])]
+        test_x=X.iloc[-round(test_size * X.shape[1]):]
+        
+        train_y=Y.iloc[:round(train_size * len(Y))]
+        test_y=Y.iloc[-round(test_size * len(Y)):]
+        
+        # train_x, temp_x, train_y, temp_y = train_test_split(X, Y, train_size=size[0], test_size=size[1]+size[2], random_state=42)
+        # test_x, val_x, test_y, val_y = train_test_split(temp_x, temp_y, train_size=size[1]/(size[1]+size[2]), test_size=size[2]/(size[1]+size[2]), random_state=42)
+        return [train_x, train_y, test_x, test_y]
