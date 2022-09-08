@@ -45,6 +45,7 @@ class Preprocessor:
         return df
     
     def get_time_of_month(self,day):
+        day = int(day)
         if day>0 and day < 11:
             return 0
         elif day >10 and day <21:
