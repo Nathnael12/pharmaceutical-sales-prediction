@@ -4,3 +4,5 @@
 /train.csv
 /tst.csv
 /processed_csv.csv
+/processed_raw.csv
+/processed.csv
