@@ -1,5 +1,7 @@
 
 import logging
+import os
+
 
 
 class Logger:
@@ -11,6 +13,15 @@ class Logger:
             file_name(str): _description_
             basic_level(_type_, optional): _description_. Defaults to logging.INFO.
         """
+
+        path = "../logs"
+        # Check whether the specified path exists or not
+        isExist = os.path.exists(path)
+
+        if not isExist:
+        # Create a new directory because it does not exist 
+            os.makedirs(path)
+
         #  # Gets or creates a logger
         # # logger = logging.getLogger(__name__)
 
