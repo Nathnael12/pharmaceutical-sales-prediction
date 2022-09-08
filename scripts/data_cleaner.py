@@ -211,16 +211,31 @@ class DataCleaner:
         """
         scale numerical columns
         """
+
         minmax_scaler = MinMaxScaler()
-        return pd.DataFrame(minmax_scaler.fit_transform(df[self.get_numerical_columns(df)]), columns=self.get_numerical_columns(df))
+        columns=["CompetitionDistance","Sales","Customers"]
+
+        
+        df[columns]=minmax_scaler.fit_transform(df[columns])
+            
+        return df
 
     def standard_scaler(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         scale numerical columns
         """
         standard_scaler = StandardScaler()
-        return pd.DataFrame(standard_scaler.fit_transform(df[self.get_numerical_columns(df)]), columns=self.get_numerical_columns(df))
+        columns=["CompetitionDistance","Sales","Customers"]
 
+        
+        df[columns]=standard_scaler.fit_transform(df[columns])
+            # try:
+            # except:
+            #     print(f"error with {col}")
+            #     pass
+
+        return df
+        
     def handle_outliers(self, df:pd.DataFrame, col:str, method:str ='IQR') -> pd.DataFrame:
         """
         Handle Outliers of a specified column using Turkey's IQR method
@@ -267,6 +282,7 @@ class DataCleaner:
         Encode features using LabelEncoder.
         """
         features = self.get_categorical_columns(df)
+        features.remove("Date")
         for feature in features:
             encodder = LabelEncoder()
             encodder.fit(df[feature])
