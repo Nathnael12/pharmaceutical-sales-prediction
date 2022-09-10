@@ -97,7 +97,7 @@ elif file and (uploaded_file is not None):
 
 @st.cache
 def load_model():
-    model=util.read_from_dvc("models/09-09-2022-11-31-48.pkl",repo,"random-forest-v0",low_memory=False)
+    model=util.read_model_dvc("models/09-09-2022-11-31-48.pkl",repo,"random-forest-v0",low_memory=False)
     return model
 
 
