@@ -9,4 +9,4 @@ sklearn
 # plotly
 mlflow
 tensorflow
-statsmodel
+statsmodels
