@@ -61,15 +61,27 @@ class Preprocessor:
         try:
             
             df = self.cleaner.convert_to_string(df,['Date'])
+        
+        except:
+            self.logger.error("Unable to set Date data type")
+
+        try:
 
             df = self.cleaner.convert_to_int(df,['Store','CompetitionOpenSinceMonth','CompetitionOpenSinceYear','Promo2SinceWeek','Promo2SinceYear','DayOfWeek','Customers','Open','Promo','SchoolHoliday','Promo2'])
-
-            df = self.cleaner.convert_to_float(df,['CompetitionDistance'])
-
-            df = self.cleaner.convert_to_object(df,['StateHoliday','StoreType','Assortment','PromoInterval'])
-
-            self.logger.info("Complete formating data types")
-
         except:
-            self.logger.error("Unable to set data type")
+            self.logger.error("Unable to convert to int")
+        
+        try:
+            df = self.cleaner.convert_to_float(df,['CompetitionDistance'])
+        except:
+            self.logger.error("Unable to set CompetitionDistance data type")
+
+        try:
+            df = self.cleaner.convert_to_object(df,['StateHoliday','StoreType','Assortment','PromoInterval'])
+        except:
+            self.logger.error("Unable to convert to object data type")
+
+            
+        self.logger.info("Complete formating data types")
+
         return df
