@@ -224,9 +224,12 @@ class DataCleaner:
         """
         scale numerical columns
         """
-        standard_scaler = StandardScaler()
-        columns=self.get_numerical_columns(df)
-        columns.remove("Store")
+        try:
+            standard_scaler = StandardScaler()
+            columns=self.get_numerical_columns(df)
+            columns.remove("Store")
+        except:
+            pass
         # columns=["CompetitionDistance","Sales","Customers"]
 
         
@@ -284,7 +287,10 @@ class DataCleaner:
         Encode features using LabelEncoder.
         """
         features = self.get_categorical_columns(df)
-        features.remove("Date")
+        try:
+            features.remove("Date")
+        except:
+            pass
         for feature in features:
             encodder = LabelEncoder()
             encodder.fit(df[feature])

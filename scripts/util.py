@@ -1,3 +1,4 @@
+# from copyreg import pickle
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,6 +8,7 @@ from logger import Logger
 from sklearn.model_selection import train_test_split
 import io 
 import sys
+import pickle
 sys.path.append('../')
 
 class Util:
@@ -48,6 +50,20 @@ class Util:
             self.logger.error(f"failed to read {path}; {e}")
 
             print("Something went wrong!",e)
+    
+    def read_model_dvc(self,path,repo,rev,low_memory=True):
+        
+        """
+            Load data from a dvc storage
+        """
+        model = None
+        try:
+            data = dvc.read(path=path,repo=repo, rev=rev)
+            model = pickle.load(io.StringIO(data))
+        except Exception as e:
+            print(f"{e}")
+        return model
+
 
     def train_test_split(self, input_data:tuple, size:tuple)-> list:
         """

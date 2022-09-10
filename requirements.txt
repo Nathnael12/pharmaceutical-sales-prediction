@@ -10,3 +10,5 @@ sklearn
 mlflow
 tensorflow
 statsmodels
+streamlit
+pickle5 
