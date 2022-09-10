@@ -87,8 +87,8 @@ if not file and submitted:
     data_added = True
 
 elif file and (uploaded_file is not None):
-    print("File uploaded, Below is your file preview")
-    st.success("File Uploaded")
+    print("File uploaded")
+    st.success("File uploaded, Below is your file preview")
     data = pd.read_csv(uploaded_file)
     data['Date'] = pd.to_datetime(data['Date'])
     st.dataframe(data)
@@ -114,8 +114,8 @@ if data_added:
         df = preprocess.feature_engineering(df)
         # st.table(df)
         
-        model = load_model()
-        # model = pickle.load(open(f'{cwd}/models/09-09-2022-11-31-48.pkl', 'rb'))
+        # model = load_model()
+        model = pickle.load(open(f'{cwd}/models/09-09-2022-11-31-48.pkl', 'rb'))
         
         prediction = model.predict(df)
         df["Date"]=pd.DatetimeIndex(df["Day"].astype(str)+'-' + df["Month"].astype(str)+'-' + df["Year"].astype(str))
