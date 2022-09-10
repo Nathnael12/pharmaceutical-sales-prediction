@@ -11,4 +11,4 @@ mlflow
 tensorflow
 statsmodels
 streamlit
-pickle
+pickle5 
